@@ -1,3 +1,14 @@
 /*
 Used to style the main page and any default elements.
 */
+nav {
+	background: #003366;
+	color: #fff;
+	padding: 10px 16px;
+}
+nav a {
+	color: #fff;
+	text-decoration: none;
+	margin: 0 8px;
+}
+nav a:hover { text-decoration: underline; }
