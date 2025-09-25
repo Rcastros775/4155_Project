@@ -19,7 +19,7 @@ button {
   font-family: Arial, sans-serif;
 }
 
-.App {
+.app {
   text-align: center;
 }
 
@@ -99,5 +99,6 @@ main h1 {
 
 .logo {
   height: 50px; 
+  max-width: 100%;
   cursor: pointer;
 }
