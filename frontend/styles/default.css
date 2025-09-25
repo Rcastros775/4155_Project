@@ -1,11 +1,11 @@
 /*
 Used to style the main page and any default elements.
 */
-.App {
+.app {
   text-align: center;
 }
 
-.App-link {
+.app-link {
   color: #61dafb;
 }
 
@@ -23,7 +23,7 @@ button {
   text-align: center;
 }
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
