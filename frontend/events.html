@@ -14,9 +14,25 @@
     <main>
         <h1>Events Page</h1>
         <p>Welcome to the Events page!</p>
+
+        <label for="eventDropdown">Sport Filter:</label>
+        <select id="eventDropdown" name="eventDropdown">
+            <option value="all">All Sports</option>
+            <option value="football">Football</option>
+            <option value="basketball">Basketball</option>
+            <option value="baseball">Baseball</option>
+            <option value="soccer">Soccer</option>
+            <option value="tennis">Tennis</option>
+        </select>
+
+        <div id="eventsList">
+            <div id="cardsDiv"></div>
+        </div>
     </main>
 
     <script src="/frontend/scripts/include.js"></script>
     <script src="/frontend/scripts/navmenu.js"></script>
+    <script src="/frontend/scripts/events.js"></script>
+
 </body>
 </html>
