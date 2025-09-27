@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  /* border: 2px solid black; */
 }
 
 :root {
@@ -15,6 +16,31 @@
   --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+.hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: 0.5px;
+  color: var(--green-900);
+}
+
+.hero p {
+  color: var(--gray-600);
+  margin-top: 8px;
+}
+
+.hero {
+  max-width: 1100px;
+  margin: 28px auto 10px;
+}
+
+.hero-card {
+  border: 2px dashed var(--green-600);
+  border-radius: var(--radius-xl);
+  padding: 38px 22px;
+  text-align: center;
+  background: linear-gradient(0deg, #fff, var(--green-100));
+}
+
 #root {
   width: 100%;
   height: 100%;
@@ -28,7 +54,6 @@ body {
   color: var(--gray-900);
   line-height: 1.5;
   margin: 0;
-  background: url("assets/Students.png") no-repeat center center fixed;
   background-size: cover;
   position: relative;
 }
@@ -48,6 +73,13 @@ header {
   background: linear-gradient(0deg, var(--green-700), var(--green-900));
   color: var(--white);
   box-shadow: var(--shadow-md);
+  padding: 10px;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-buttons a {
@@ -58,6 +90,7 @@ header {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.12);
   font-weight: 600;
+  margin: 10px;
   transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease;
   backdrop-filter: saturate(120%) blur(2px);
 }
@@ -89,11 +122,16 @@ header {
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
+  margin: 10px;
 }
 
 .login-btn:hover {
   background: var(--white);
   color: var(--green-900);
+}
+
+main {
+  height: 90vh;
 }
 
 main h1 {
@@ -104,18 +142,32 @@ main h1 {
 
 .upcoming {
   margin: 20px;
+  width: 80%;
+  height: 100%;
+  margin: 16px auto 60px;
+  padding: 0 20px;
 }
 
 .upcoming h2 {
   color: #00471b;
   text-align: center;
+  padding: 50px;
 }
 
 .games {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 840px) {
+  .games {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .games {
+    grid-template-columns: 1fr;
+  }
 }
 
 .game-card {
@@ -133,4 +185,12 @@ main h1 {
 .logo {
   height: 50px;
   cursor: pointer;
+}
+
+footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 22px 20px;
+  text-align: center;
+  color: var(--gray-600);
+  background: #fafafa;
 }

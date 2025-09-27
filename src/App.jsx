@@ -41,6 +41,9 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>
+      <footer>
+        <small>© 2025 Niner Athletic Hub</small>
+      </footer>
     </>
   );
 }

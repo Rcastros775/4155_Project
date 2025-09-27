@@ -16,7 +16,12 @@ export default function Home() {
 
   return (
     <div className="upcoming">
-      <h1>Niner Athletic Hub</h1>
+      <section className="hero">
+        <div className="hero-card">
+          <h1>Niner Athletic Hub</h1>
+          <p>All your favorite Charlotte sports in one place.</p>
+        </div>
+      </section>
       <h2>Upcoming Games</h2>
       <div className="games">
         {loading ? (
