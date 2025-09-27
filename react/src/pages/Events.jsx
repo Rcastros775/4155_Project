@@ -28,7 +28,13 @@ export default function Events() {
               className="event-icon"
               onClick={() => setSelectedGame(game)}
             >
-              <div className="event-logo"></div>
+              <div className="event-logo">
+                <img
+                  src={`http://localhost:5000${game.image}`}
+                  alt="Game"
+                  className="game-image"
+                />
+              </div>
               <p>
                 {game.home_team} vs {game.away_team}
               </p>
