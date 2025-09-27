@@ -1,0 +1,62 @@
+/* Gender toggle */
+.gender-toggle {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+}
+.gender-btn {
+  flex: 1;
+  padding: 0.5em;
+  border: 1px solid #444;
+  background: #eee;
+  cursor: pointer;
+}
+.gender-btn.active {
+  background: #cfc;
+  font-weight: bold;
+}
+
+/* Accordion */
+.accordion-item {
+  border: 1px solid #444;
+  margin: 0.5em 0;
+}
+.accordion-header {
+  width: 100%;
+  padding: 0.5em;
+  text-align: left;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+.accordion-content {
+  display: none;
+  padding: 0.5em;
+  border-top: 1px solid #444;
+}
+.accordion-item.active .accordion-content {
+  display: block;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #444;
+}
+.tab-btn {
+  flex: 1;
+  padding: 0.5em;
+  border: none;
+  cursor: pointer;
+  background: #f0f0f0;
+}
+.tab-btn.active {
+  background: #cfc;
+  font-weight: bold;
+}
+.tab-content {
+  display: none;
+  padding: 0.5em;
+}
+.tab-content.active {
+  display: block;
+}
