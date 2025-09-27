@@ -5,9 +5,27 @@ app = Flask(__name__)
 CORS(app)  # enable CORS for React requests
 
 games = [
-    {"home_team": "UNC", "away_team": "Duke", "date": "2025-10-05", "time": "7:00 PM"},
-    {"home_team": "NC State", "away_team": "Wake Forest", "date": "2025-10-10", "time": "6:30 PM"},
-    {"home_team": "App State", "away_team": "ETSU", "date": "2025-10-15", "time": "5:00 PM"}
+    {
+        "home_team": "UNC",
+        "away_team": "Duke",
+        "date": "2025-10-05",
+        "time": "7:00 PM",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "home_team": "NC State",
+        "away_team": "Wake Forest",
+        "date": "2025-10-10",
+        "time": "6:30 PM",
+        "image": "/static/football.jpg"
+    },
+    {
+        "home_team": "App State",
+        "away_team": "ETSU",
+        "date": "2025-10-15",
+        "time": "5:00 PM",
+        "image": "/static/Soccer.png"
+    }
 ]
 
 @app.route("/api/games", methods=["GET"])

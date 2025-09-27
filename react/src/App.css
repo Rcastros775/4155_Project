@@ -194,6 +194,15 @@ footer {
   color: var(--gray-600);
   background: #fafafa;
 }
+
+.game-image {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
 .events-page {
   padding: 20px;
 }

@@ -29,6 +29,11 @@ export default function Home() {
         ) : games.length > 0 ? (
           games.map((game, index) => (
             <div key={index} className="game-card">
+              <img
+                src={`http://localhost:5000${game.image}`}
+                alt="Game"
+                className="game-image"
+              />
               <strong>{game.home_team}</strong> vs{" "}
               <strong>{game.away_team}</strong>
               <div>
