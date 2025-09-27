@@ -161,6 +161,17 @@ body::before {
 }
 .card:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
 
+.details {
+  display: none;
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #222;
+}
+
+.game-card.expanded .details {
+  display: block;
+}
+
 .thumb {
   height: 120px;
   border-radius: 12px;
