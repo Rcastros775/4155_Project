@@ -10,16 +10,16 @@ function attachNavListeners() {
     }
 
     eventsBtn.addEventListener("click", () => {
-        window.location.href = "/frontend/events.html";    
+        window.location.href = "./events.html";    
     });
 
 
     statisticsBtn.addEventListener("click", () => {
-        window.location.href = "/frontend/statistics.html";    
+        window.location.href = "./statistics.html";    
     });
 
     bookmarksBtn.addEventListener("click", () => {
-        window.location.href = "/frontend/bookmarks.html";    
+        window.location.href = "./bookmarks.html";    
     });
 
 }
