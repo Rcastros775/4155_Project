@@ -6,21 +6,21 @@ CORS(app)  # enable CORS for React requests
 
 games = [
     {
-        "home_team": "UNC",
+        "home_team": "UNCC",
         "away_team": "Duke",
         "date": "2025-10-05",
         "time": "7:00 PM",
         "image": "/static/Basketball.webp"
     },
     {
-        "home_team": "NC State",
+        "home_team": "UNCC",
         "away_team": "Wake Forest",
         "date": "2025-10-10",
         "time": "6:30 PM",
         "image": "/static/football.jpg"
     },
     {
-        "home_team": "App State",
+        "home_team": "UNCC",
         "away_team": "ETSU",
         "date": "2025-10-15",
         "time": "5:00 PM",
