@@ -48,16 +48,24 @@ export default function Bookmarks() {
         </div>
       )}
 
-      {/* Detail card */}
       {selectedGame && (
-        <div className="event-detail">
-          <h2>
-            {selectedGame.home_team} VS {selectedGame.away_team}
-          </h2>
-          <p>
-            {selectedGame.date} @ {selectedGame.time}
-          </p>
-          <button onClick={() => setSelectedGame(null)}>Close</button>
+        <div className="modal-overlay" onClick={() => setSelectedGame(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>{selectedGame.home_team} vs {selectedGame.away_team}</h2>
+            <p>{selectedGame.date} @ {selectedGame.time}</p>
+            <img
+              src={`http://localhost:5000${selectedGame.image}`}
+              alt="Game"
+              className="modal-image"
+            />
+            <div className="modal-actions">
+              <button className="btn interested-btn">I'm Interested</button>
+              <button className="btn invite-btn">Invite Friends</button>
+            </div>
+            <button className="close-btn" onClick={() => setSelectedGame(null)}>
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>
