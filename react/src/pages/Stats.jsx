@@ -52,7 +52,7 @@ export default function Statistics() {
             <div className="accordion-content">
               {/* Tabs */}
               <div className="tabs">
-                {["quick", "details", "season"].map((tab) => (
+                {["quick", "details", "season", "new"].map((tab) => (
                   <button
                     key={tab}
                     className={`tab-btn ${
@@ -64,7 +64,9 @@ export default function Statistics() {
                       ? "Quick Stats"
                       : tab === "details"
                       ? "Game Details"
-                      : "Season Stats"}
+                      : tab === "season"
+                      ? "Season Stats"
+                      : "New!"}
                   </button>
                 ))}
               </div>
@@ -104,6 +106,14 @@ export default function Statistics() {
               >
                 <p>Season stats go here...</p>
               </div>
+              <div
+                className={`tab-content ${
+                  (activeTabs[sport] || "quick") === "new" ? "active" : ""
+                }`}
+              >
+                <p><strong>Latest game details go here...</strong></p>
+                <p>Lorem ipsum...</p>
+              </div>
             </div>
           </div>
         ))}
@@ -111,4 +121,3 @@ export default function Statistics() {
     </main>
   );
 }
-
