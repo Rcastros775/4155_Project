@@ -9,25 +9,55 @@ import Events from "./pages/Events";
 import Friends from "./pages/Friends";
 import Bookmarks from "./pages/Bookmarks";
 import Login from "./pages/Login";
+import Register from "./pages/Register"; // ✅ added
 
 function App() {
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("username");
+    if (storedUser) {
+      setUsername(storedUser);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    setUsername(null);
+    window.location.reload();
+  };
+
   return (
     <>
       <header>
         <Link to="/">
           <img className="logo" src={logo} alt="logo" />
         </Link>
+
         <div className="nav-buttons">
           <Link to="/stats">Stats</Link>
           <Link to="/events">Events</Link>
           <Link to="/friends">Friends</Link>
           <Link to="/bookmarks">Bookmarks</Link>
         </div>
+
         <div className="profile">
-          <span className="profile-icon"></span>
-          <Link to="/login">
-            <button className="login-btn">Log in</button>
-          </Link>
+          {username ? (
+            <>
+              <span className="profile-icon"></span>
+              <span style={{ marginLeft: "10px", fontWeight: "600" }}>
+                Hi, {username}
+              </span>
+              <button className="login-btn" onClick={handleLogout}>
+                Log out
+              </button>
+            </>
+          ) : (
+            <Link to="/login">
+              <button className="login-btn">Log in</button>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -39,6 +69,7 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> {/* ✅ new */}
         </Routes>
       </main>
     </>
