@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,48 +19,51 @@ export default function Login() {
     const data = await res.json();
 
     if (res.ok) {
-      // Save JWT token + username so user stays logged in
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
       setMessage(`✅ Welcome, ${data.username}!`);
-
-      // OPTIONAL: Redirect user to homepage after login
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1200);
-
+      setTimeout(() => (window.location.href = "/"), 1200);
     } else {
       setMessage("❌ " + data.error);
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Log In</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        /><br/><br/>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br/><br/>
-        <button type="submit">Log In</button>
-      </form>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Welcome Back</h2>
+        <p className="login-subtitle">Log in to continue</p>
 
-      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            className="login-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-      <p style={{ marginTop: "1rem" }}>
-        Don't have an account? <a href="/register">Create one</a>
-      </p>
+          <input
+            type="password"
+            className="login-input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button type="submit" className="login-btn">
+            Log In
+          </button>
+        </form>
+
+        {message && <p className="login-message">{message}</p>}
+
+        <p className="login-footer">
+          Don’t have an account? <a href="/register">Create one</a>
+        </p>
+      </div>
     </div>
   );
 }
-
