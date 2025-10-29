@@ -74,14 +74,42 @@ def me():
 
 # === EXISTING GAMES API (KEEPING YOUR DATA) ===
 games = [
-    {"home_team": "UNCC", "away_team": "Duke", "date": "2025-10-05", "time": "7:00 PM", "image": "/static/Basketball.webp"},
-    {"home_team": "UNCC", "away_team": "Wake Forest", "date": "2025-10-10", "time": "6:30 PM", "image": "/static/football.jpg"},
-    {"home_team": "UNCC", "away_team": "ETSU", "date": "2025-10-15", "time": "5:00 PM", "image": "/static/Soccer.png"}
+    {
+        "id": 1,
+        "home_team": "UNCC",
+        "away_team": "Duke",
+        "date": "2025-10-05",
+        "time": "7:00 PM",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 2,
+        "home_team": "UNCC",
+        "away_team": "Wake Forest",
+        "date": "2025-10-10",
+        "time": "6:30 PM",
+        "image": "/static/football.jpg"
+    },
+    {
+        "id": 3,
+        "home_team": "UNCC",
+        "away_team": "ETSU",
+        "date": "2025-10-15",
+        "time": "5:00 PM",
+        "image": "/static/Soccer.png"
+    }
 ]
 
 @app.route("/api/games")
 def get_games():
     return jsonify(games)
+
+@app.route("/api/games/<int:game_id>", methods=["GET"])
+def get_game(game_id):
+    for game in games:
+        if game["id"] == game_id:
+            return jsonify(game)
+    return jsonify({"error": "Game not found"}), 404
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

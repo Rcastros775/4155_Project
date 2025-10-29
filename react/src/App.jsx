@@ -10,6 +10,7 @@ import Friends from "./pages/Friends";
 import Bookmarks from "./pages/Bookmarks";
 import Login from "./pages/Login";
 import Register from "./pages/Register"; // ✅ added
+import EventDetail from "./pages/EventDetail";
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -66,6 +67,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetail />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/login" element={<Login />} />

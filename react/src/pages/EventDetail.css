@@ -1,0 +1,81 @@
+.event-detail {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #222;
+}
+
+.back-btn {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  color: #00703c; /* UNCC green tone */
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: color 0.2s ease;
+}
+
+.back-btn:hover {
+  color: #004d2b;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+}
+
+.event-info {
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.event-info h3 {
+  margin-bottom: 0.5rem;
+  color: #00703c;
+}
+
+.event-info p {
+  margin-bottom: 1.5rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.event-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  background-color: #00703c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #00582e;
+  transform: translateY(-2px);
+}
+
+.invite-btn {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.invite-btn:hover {
+  background-color: #d1d1d1;
+}

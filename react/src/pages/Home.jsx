@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import EventCard from "../components/EventCard";
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -28,18 +29,7 @@ export default function Home() {
           <p>Loading games...</p>
         ) : games.length > 0 ? (
           games.map((game, index) => (
-            <div key={index} className="game-card">
-              <img
-                src={`http://localhost:5000${game.image}`}
-                alt="Game"
-                className="game-image"
-              />
-              <strong>{game.home_team}</strong> vs{" "}
-              <strong>{game.away_team}</strong>
-              <div>
-                {game.date} @ {game.time}
-              </div>
-            </div>
+            <EventCard key={index} game={game} index={index} />
           ))
         ) : (
           <p>No games scheduled.</p>
