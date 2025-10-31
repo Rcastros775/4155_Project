@@ -1,76 +1,34 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import "./EventDetail.css";
+import { useState, useEffect } from "react";
+import EventCard from "../components/EventCard";
+import "./Events.css";
 
-export default function EventDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [game, setGame] = useState(null);
+export default function Events() {
+  const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [bookmarked, setBookmarked] = useState(false);
-
-  const getToken = () => localStorage.getItem("token");
 
   useEffect(() => {
-      fetch(`http://localhost:5000/api/games/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setGame(data);
-          setLoading(false);
-        });
-    }, [id]);
-
-  useEffect(() => {
-    const token = getToken();
-    if (!token || token === "null" || token === "undefined") return;
-
-    fetch("http://localhost:5000/api/bookmarks", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => (res.ok ? res.json() : []))
-      .then((list) => setBookmarked(list.some((e) => String(e.id) === String(id))));
-  }, [id]);
-
-  const toggleBookmark = () => {
-    const token = getToken();
-    if (!token || token === "null" || token === "undefined") {
-      navigate("/login");
-      return;
-    }
-    const method = bookmarked ? "DELETE" : "POST";
-    fetch(`http://localhost:5000/api/bookmarks/${id}`, {
-      method,
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      if (res.ok) setBookmarked(!bookmarked);
-    });
-  };
-
-  if (loading) return <p>Loading event...</p>;
-  if (!game) return <p>Event not found.</p>;
+    fetch("http://localhost:5000/api/games")
+      .then((res) => res.json())
+      .then((data) => {
+        setGames(data);
+        setLoading(false);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
-    <div className="event-detail">
-      <button className="back-btn" onClick={() => navigate(-1)}>← Back</button>
+    <div className="events-page">
+      <h1>Upcoming Events</h1>
 
-      <h1>{game.home_team} vs {game.away_team}</h1>
-      <p>{game.sport}</p>
-      <p>{game.date} @ {game.time}</p>
-      <p>Stadium: {game.stadium_location}</p>
-
-      <img
-        src={`http://localhost:5000${game.image}`}
-        alt="Game"
-        className="detail-image"
-      />
-
-      <div className="event-actions">
-        <button className="btn interested-btn">I'm Interested</button>
-        <button className="btn invite-btn">Invite Friends</button>
-        <button className="btn" onClick={toggleBookmark}>
-          {bookmarked ? "★ Bookmarked" : "☆ Bookmark"}
-        </button>
-      </div>
+      {loading ? (
+        <p>Loading events...</p>
+      ) : (
+        <div className="event-grid">
+          {games.map((game, index) => (
+            <EventCard key={index} game={game} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
