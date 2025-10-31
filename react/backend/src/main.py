@@ -11,11 +11,12 @@ app = Flask(__name__)
 CORS(
     app,
     resources={r"/api/*": {"origins": "http://localhost:5173"}},
-    methods=["GET", "POST", "DELETE", "OPTIONS"],
+    methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],  # <-- added PATCH, PUT
     allow_headers=["Authorization", "Content-Type"],
     expose_headers=["Authorization"],
     supports_credentials=False,
 )
+
 
 # === CONFIG ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -96,6 +97,17 @@ class Bookmark(db.Model):
     user = db.relationship("User", backref=db.backref("bookmarks", lazy=True))
     event = db.relationship("Event", backref=db.backref("bookmarked_by", lazy=True))
 
+# === INTERESTED MODEL ===
+class Interest(db.Model):
+    __tablename__ = "interests"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship("User")
+    event = db.relationship("Event")
+    __table_args__ = (db.UniqueConstraint("user_id", "event_id", name="uix_interest"),)
 
 #DB CREATION
 with app.app_context():
@@ -156,6 +168,34 @@ def login():
 
     token = create_access_token(identity=str(user.id))
     return jsonify({"token": token, "username": user.username}), 200
+
+# === UPDATE PROFILE ===
+@app.route("/api/user/update", methods=["PATCH"])
+@jwt_required()
+def update_profile():
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+
+    data = request.get_json()
+    new_username = data.get("username")
+    new_password = data.get("password")
+
+    if new_username:
+        if User.query.filter(User.username == new_username, User.id != user_id).first():
+            return jsonify({"error": "Username already taken"}), 400
+        user.username = new_username
+
+    if new_password:
+        hashed_pw = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        user.password = hashed_pw
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Profile updated successfully",
+        "username": user.username
+    }), 200
+
 
 # === TEST PROTECTED ROUTE ===
 @app.route("/api/me", methods=["GET"])
@@ -257,6 +297,51 @@ def get_bookmarks():
             "image": b.event.image
         } for b in bookmarks
     ])
+
+#interested in games 
+# === INTERESTS ===
+
+# list of participants
+@app.route("/api/interests/<int:event_id>", methods=["GET"])
+def get_interests(event_id):
+    rows = Interest.query.filter_by(event_id=event_id).all()
+    return jsonify([
+        {"user_id": r.user_id, "username": getattr(r.user, "username", f"user{r.user_id}")}
+        for r in rows
+    ])
+
+# check current user is interested 
+@app.route("/api/interests/<int:event_id>/mine", methods=["GET"])
+@jwt_required()
+def my_interest_status(event_id):
+    user_id = int(get_jwt_identity())
+    exists = Interest.query.filter_by(user_id=user_id, event_id=event_id).first() is not None
+    return jsonify({"interested": exists})
+
+# mark current user as interested
+@app.route("/api/interests/<int:event_id>", methods=["POST"])
+@jwt_required()
+def add_interest(event_id):
+    user_id = int(get_jwt_identity())
+    if not Event.query.get(event_id):
+        return jsonify({"error": "Event not found"}), 404
+    if Interest.query.filter_by(user_id=user_id, event_id=event_id).first():
+        return jsonify({"message": "Already interested"}), 200
+    db.session.add(Interest(user_id=user_id, event_id=event_id))
+    db.session.commit()
+    return jsonify({"message": "Marked as interested"}), 201
+
+# remove interest
+@app.route("/api/interests/<int:event_id>", methods=["DELETE"])
+@jwt_required()
+def remove_interest(event_id):
+    user_id = int(get_jwt_identity())
+    row = Interest.query.filter_by(user_id=user_id, event_id=event_id).first()
+    if not row:
+        return jsonify({"error": "Not marked interested"}), 404
+    db.session.delete(row)
+    db.session.commit()
+    return jsonify({"message": "Interest removed"}), 200
 
 #*******************************
 if __name__ == "__main__":

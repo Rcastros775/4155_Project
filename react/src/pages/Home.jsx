@@ -23,7 +23,7 @@ export default function Home() {
           <p>All your favorite Charlotte sports in one place.</p>
         </div>
       </section>
-      <h2>Upcoming Games</h2>
+      <h2> Games</h2>
       <div className="games">
         {loading ? (
           <p>Loading games...</p>
