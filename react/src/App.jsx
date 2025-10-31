@@ -47,10 +47,9 @@ function App() {
         <div className="profile">
           {username ? (
             <>
-              <span className="profile-icon"></span>
-              <Link to="/profile" style={{ marginLeft: "10px", fontWeight: "600", cursor: "pointer", textDecoration: "none" }}>
-                Hi, {username}
-              </Link>
+              <span className="profile-icon">
+                <Link to="/profile">Hi, {username}</Link>
+              </span>
               <button className="login-btn" onClick={handleLogout}>
                 Log out
               </button>

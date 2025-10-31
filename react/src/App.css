@@ -100,17 +100,28 @@ header {
   transform: translateY(-1px);
 }
 
-.profile {
-  display: flex;
+.profile-icon {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
-.profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--green-100);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+.profile-icon a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-icon:hover {
+  background-color: #509650;
+  color: rgb(255, 255, 255);
+  transform: translateY(-1px);
 }
 
 .login-btn {
@@ -149,8 +160,9 @@ main h1 {
 }
 
 .upcoming h2 {
-  color: #00471b;
+  color: #087532;
   text-align: center;
+  font-size: 4vh;
   padding: 50px;
 }
 
@@ -159,27 +171,17 @@ main h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
+
 @media (max-width: 840px) {
   .games {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 560px) {
   .games {
     grid-template-columns: 1fr;
   }
-}
-
-.game-card {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 100px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.game-card:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -193,50 +195,4 @@ footer {
   text-align: center;
   color: var(--gray-600);
   background: #fafafa;
-}
-
-.game-image {
-  width: 100%;
-  height: 80%;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-
-.events-page {
-  padding: 20px;
-}
-
-.event-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.event-icon {
-  background: #f4f4f4;
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.event-icon:hover {
-  transform: scale(1.05);
-  background: #e8f0fe;
-}
-
-.event-logo {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-.event-detail {
-  margin-top: 40px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
