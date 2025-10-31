@@ -31,3 +31,6 @@ __pycache__/
 # Env files
 .env
 *.env
+
+#local database
+backend/src/instance/ninerhub.db
