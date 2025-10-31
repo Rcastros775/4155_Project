@@ -35,7 +35,7 @@ export default function Events() {
 
   return (
     <div className="upcoming">
-      <h1>Upcoming Events</h1>
+      <h1>Events</h1>
 
       <div className="dropdown-container">
         <label htmlFor="locationDropdown">Filter by Location: </label>

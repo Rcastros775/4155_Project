@@ -15,7 +15,7 @@ def test_get_game_by_id(client):
 def test_get_bookmarks_requires_auth(client):
     r = client.get("/api/bookmarks")
     assert r.status_code in (401, 422)
-    
+
 #bookmars add and book mark list
 def test_add_and_list_bookmark(client, app, authed_user):
     user, token = authed_user
@@ -41,9 +41,6 @@ def test_remove_bookmark(client, authed_user):
 
 #register account test
 def test_register_and_login(client, app):
-
     r = client.post("/api/register", json={"username":"u1","email":"u1@x.com","password":"pw"})
     assert r.status_code == 201
-
-
     r2 = client.post("/api/login", json={"email":"u1@x.com","password":"pw"})
