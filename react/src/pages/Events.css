@@ -1,165 +1,31 @@
-* {
-  box-sizing: border-box;
-  /* border: 2px solid black; */
-}
-
-:root {
-  --green-900: #064e3b; /* deep */
-  --green-700: #0b7a3b; /* brand */
-  --green-600: #0f8a43; /* accent */
-  --green-100: #e8f5ee; /* light tint */
-  --gray-900: #111827;
-  --gray-600: #4b5563;
-  --white: #ffffff;
-  --radius-xl: 18px;
-  --radius-lg: 14px;
-  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* ====== Hero Section ====== */
-.hero {
-  max-width: 1100px;
-  margin: 28px auto 10px;
-  text-align: center;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(28px, 4vw, 44px);
-  letter-spacing: 0.5px;
-  color: var(--green-900);
-}
-
-.hero p {
-  color: var(--gray-600);
-  margin-top: 8px;
-}
-
-.hero-card {
-  border: 2px dashed var(--green-600);
-  border-radius: var(--radius-xl);
-  padding: 38px 22px;
-  text-align: center;
-  background: linear-gradient(0deg, var(--white), var(--green-100));
-}
-
-/* ====== Root App ====== */
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  color: var(--gray-900);
-  line-height: 1.5;
-  margin: 0;
-  background-size: cover;
-  position: relative;
-}
-
-h1,
-h2,
-div,
-button {
-  margin: 0;
-  padding: 0;
-}
-
-/* ====== Header ====== */
-header {
+.dropdown-container {
+  margin-bottom: 2rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(0deg, var(--green-700), var(--green-900));
-  color: var(--white);
-  box-shadow: var(--shadow-md);
-  padding: 10px;
-}
-
-/* ====== Nav Buttons ====== */
-.nav-buttons {
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-}
-
-.nav-buttons a {
-  text-decoration: none;
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.08);
-  padding: 10px 14px;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-weight: 600;
-  margin: 10px;
-  transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease;
-  backdrop-filter: saturate(120%) blur(2px);
-}
-
-.nav-buttons a:hover {
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-1px);
-}
-
-.profile {
-  display: flex;
   align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--green-100);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+.dropdown-container label {
+  font-weight: 600;
+  color: #004d2b;
 }
 
-.login-btn {
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  background: transparent;
-  color: var(--white);
-  padding: 9px 14px;
-  border-radius: 9999px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-  margin: 10px;
+.dropdown-container select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-btn:hover {
-  background: var(--white);
-  color: var(--green-900);
+.dropdown-container select:focus {
+  outline: none;
+  border-color: #00703c;
+  box-shadow: 0 0 0 3px rgba(0, 112, 60, 0.2);
 }
 
-/* ====== Main Section ====== */
-main {
-  height: 90vh;
-}
-
-main h1 {
-  margin: 20px 0;
-  color: var(--gray-900);
-  text-align: center;
-}
-
-.upcoming {
-  width: 80%;
-  height: 100%;
-  margin: 16px auto 60px;
-  padding: 0 20px;
-}
-
-.upcoming h2 {
-  color: var(--green-900);
-  text-align: center;
-  padding: 50px;
-}
-
-/* ====== Games Grid ====== */
 .games {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -176,132 +42,4 @@ main h1 {
   .games {
     grid-template-columns: 1fr;
   }
-}
-
-.game-card {
-  background-color: var(--white);
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: 1.5px solid rgba(15, 138, 67, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-align: center;
-  cursor: pointer;
-}
-
-.game-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-}
-
-.game-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 0.75rem;
-}
-
-.game-card h2 {
-  color: var(--green-900);
-  margin: 0.4rem 0 0.25rem;
-  font-size: 1.1rem;
-}
-
-.game-card p {
-  color: var(--gray-600);
-  margin: 0.15rem 0;
-  font-size: 0.95rem;
-}
-
-/* ====== Footer ====== */
-footer {
-  border-top: 1px solid #e5e7eb;
-  padding: 22px 20px;
-  text-align: center;
-  color: var(--gray-600);
-  background: #fafafa;
-}
-
-/* ====== Modal (if used) ====== */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal-content {
-  background: var(--white);
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  width: 320px;
-  max-width: 90%;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  animation: fadeIn 0.25s ease-in-out;
-}
-
-.modal-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin: 10px auto;
-  display: block;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-around;
-  margin: 12px 0;
-}
-
-.close-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: crimson;
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.event-icon {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.event-icon:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.event-icon img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 0.75rem;
-}
-
-.event-icon h3 {
-  color: #00703c;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-
-.event-icon p {
-  color: #444;
-  margin: 0.2rem 0;
-  font-size: 0.95rem;
 }
