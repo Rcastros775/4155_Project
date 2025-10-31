@@ -11,12 +11,11 @@ app = Flask(__name__)
 CORS(
     app,
     resources={r"/api/*": {"origins": "http://localhost:5173"}},
-    methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],  # <-- added PATCH, PUT
+    methods=["GET", "POST", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type"],
     expose_headers=["Authorization"],
     supports_credentials=False,
 )
-
 
 # === CONFIG ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -36,36 +35,236 @@ jwt = JWTManager(app)
 games = [
     {
         "id": 1,
-        "sport": "Basketball",
+        "sport": "Soccer",
         "home_team": "UNCC",
-        "away_team": "Duke",
-        "date": "2025-10-05",
-        "time": "7:00 PM",
-        "stadium_location": "Dale F. Halton Arena",
-        "image": "/static/Basketball.webp"
+        "away_team": "#22 Florida Atlantic",
+        "date": "2025-10-17",
+        "time": "6:00 PM",
+        "stadium_location": "Transamerica Field",
+        "image": "/static/Soccer.png"
     },
     {
         "id": 2,
         "sport": "Football",
         "home_team": "UNCC",
-        "away_team": "Wake Forest",
-        "date": "2025-10-10",
-        "time": "6:30 PM",
+        "away_team": "Temple",
+        "date": "2025-10-18",
+        "time": "3:30 PM",
         "stadium_location": "Jerry Richardson Stadium",
         "image": "/static/football.jpg"
     },
     {
         "id": 3,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "North Carolina Wesleyan",
+        "date": "2025-10-20",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 4,
         "sport": "Soccer",
         "home_team": "UNCC",
-        "away_team": "ETSU",
-        "date": "2025-10-15",
-        "time": "5:00 PM",
+        "away_team": "Florida Atlantic",
+        "date": "2025-10-23",
+        "time": "7:00 PM",
         "stadium_location": "Transamerica Field",
         "image": "/static/Soccer.png"
-        
+    },
+    {
+        "id": 5,
+        "sport": "Football",
+        "home_team": "UNCC",
+        "away_team": "North Texas",
+        "date": "2025-10-24",
+        "time": "7:00 PM",
+        "stadium_location": "Jerry Richardson Stadium",
+        "image": "/static/football.jpg"
+    },
+    {
+        "id": 6,
+        "sport": "Soccer",
+        "home_team": "UNCC",
+        "away_team": "Temple",
+        "date": "2025-10-29",
+        "time": "6:00 PM",
+        "stadium_location": "Transamerica Field",
+        "image": "/static/Soccer.png"
+    },
+    {
+        "id": 7,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Auburn",
+        "date": "2025-11-03",
+        "time": "5:30 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 8,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Indiana State",
+        "date": "2025-11-03",
+        "time": "8:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 9,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Campbell",
+        "date": "2025-11-06",
+        "time": "6:30 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 10,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Tennessee Tech",
+        "date": "2025-11-07",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 11,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Davidson",
+        "date": "2025-11-11",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 12,
+        "sport": "Football",
+        "home_team": "UNCC",
+        "away_team": "UTSA",
+        "date": "2025-11-15",
+        "time": "6:00 PM",
+        "stadium_location": "Jerry Richardson Stadium",
+        "image": "/static/football.jpg"
+    },
+    {
+        "id": 13,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Wofford",
+        "date": "2025-11-22",
+        "time": "2:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 14,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Shaw University",
+        "date": "2025-11-23",
+        "time": "2:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 15,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "North Carolina A&T",
+        "date": "2025-12-03",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 16,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Utah State",
+        "date": "2025-12-07",
+        "time": "2:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 17,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Davidson",
+        "date": "2025-12-14",
+        "time": "6:30 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 18,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Winthrop",
+        "date": "2025-12-17",
+        "time": "11:00 AM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 19,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Lafayette",
+        "date": "2025-12-18",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 20,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "ETSU",
+        "date": "2025-12-21",
+        "time": "11:00 AM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 21,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "UIC",
+        "date": "2025-12-21",
+        "time": "2:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 22,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Temple",
+        "date": "2025-12-30",
+        "time": "7:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
+    },
+    {
+        "id": 23,
+        "sport": "Basketball",
+        "home_team": "UNCC",
+        "away_team": "Memphis",
+        "date": "2025-12-31",
+        "time": "3:00 PM",
+        "stadium_location": "Dale F. Halton Arena",
+        "image": "/static/Basketball.webp"
     }
 ]
+
 # === USER MODEL ===
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -168,34 +367,6 @@ def login():
 
     token = create_access_token(identity=str(user.id))
     return jsonify({"token": token, "username": user.username}), 200
-
-# === UPDATE PROFILE ===
-@app.route("/api/user/update", methods=["PATCH"])
-@jwt_required()
-def update_profile():
-    user_id = int(get_jwt_identity())
-    user = User.query.get(user_id)
-
-    data = request.get_json()
-    new_username = data.get("username")
-    new_password = data.get("password")
-
-    if new_username:
-        if User.query.filter(User.username == new_username, User.id != user_id).first():
-            return jsonify({"error": "Username already taken"}), 400
-        user.username = new_username
-
-    if new_password:
-        hashed_pw = bcrypt.generate_password_hash(new_password).decode('utf-8')
-        user.password = hashed_pw
-
-    db.session.commit()
-
-    return jsonify({
-        "message": "Profile updated successfully",
-        "username": user.username
-    }), 200
-
 
 # === TEST PROTECTED ROUTE ===
 @app.route("/api/me", methods=["GET"])
