@@ -1,23 +1,23 @@
 import { useNavigate } from "react-router-dom";
 
-export default function EventCard({ game, index }) {
+export default function EventCard({ game }) {
   const navigate = useNavigate();
 
   return (
     <div
-      key={index}
       className="event-icon"
       onClick={() => navigate(`/events/${game.id}`)}
+      style={{ cursor: "pointer" }}
     >
       <img
         src={`http://localhost:5000${game.image}`}
-        alt="Game"
+        alt={`${game.home_team} vs ${game.away_team}`}
         className="game-image"
       />
-      <p>
-        {game.home_team} vs {game.away_team}
-      </p>
-      <small>{game.date}</small>
+      <h3>{game.home_team} vs {game.away_team}</h3>
+      <p>{game.sport}</p>
+      <p>{game.date} @ {game.time}</p>
+      <p>Stadium: {game.stadium_location}</p>
     </div>
   );
 }

@@ -79,3 +79,14 @@
 .invite-btn:hover {
   background-color: #d1d1d1;
 }
+
+.bookmark-btn, .bookmark-active {
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.bookmark-active {
+  border-color: gold;
+  font-weight: 600;
+}
