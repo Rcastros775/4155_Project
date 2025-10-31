@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./EventDetail.css";
 
 export default function EventDetail() {
   const { id } = useParams();
   const [game, setGame] = useState(null);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [bookmarked, setBookmarked] = useState(false);
 
@@ -19,7 +20,6 @@ export default function EventDetail() {
       });
   }, [id]);
 
-  
   useEffect(() => {
     if (!token) return;
     fetch("http://localhost:5000/api/bookmarks", {
@@ -32,7 +32,7 @@ export default function EventDetail() {
   }, [id, token]);
 
   const toggleBookmark = () => {
-    if (!token) return; 
+    if (!token) return;
     const method = bookmarked ? "DELETE" : "POST";
     fetch(`http://localhost:5000/api/bookmarks/${id}`, {
       method,
@@ -54,19 +54,32 @@ export default function EventDetail() {
 
   return (
     <div className="event-detail">
-      <Link to="/events" className="back-btn">← Back to Events</Link>
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
 
-      <h1>{game.home_team} vs {game.away_team}</h1>
+      <h1>
+        {game.home_team} vs {game.away_team}
+      </h1>
 
       <img
-        src={mapImages[game.stadium_location] || `http://localhost:5000${game.image}`}
+        src={
+          mapImages[game.stadium_location] ||
+          `http://localhost:5000${game.image}`
+        }
         alt={game.sport}
         className="detail-image"
       />
 
-      <p><strong>Sport:</strong> {game.sport}</p>
-      <p><strong>Date:</strong> {game.date} @ {game.time}</p>
-      <p><strong>Stadium:</strong> {game.stadium_location}</p>
+      <p>
+        <strong>Sport:</strong> {game.sport}
+      </p>
+      <p>
+        <strong>Date:</strong> {game.date} @ {game.time}
+      </p>
+      <p>
+        <strong>Stadium:</strong> {game.stadium_location}
+      </p>
 
       <div className="event-actions">
         <button className="btn interested-btn">I'm Interested</button>
