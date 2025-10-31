@@ -11,11 +11,12 @@ app = Flask(__name__)
 CORS(
     app,
     resources={r"/api/*": {"origins": "http://localhost:5173"}},
-    methods=["GET", "POST", "DELETE", "OPTIONS"],
+    methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],  # <-- added PATCH, PUT
     allow_headers=["Authorization", "Content-Type"],
     expose_headers=["Authorization"],
     supports_credentials=False,
 )
+
 
 # === CONFIG ===
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -167,6 +168,34 @@ def login():
 
     token = create_access_token(identity=str(user.id))
     return jsonify({"token": token, "username": user.username}), 200
+
+# === UPDATE PROFILE ===
+@app.route("/api/user/update", methods=["PATCH"])
+@jwt_required()
+def update_profile():
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+
+    data = request.get_json()
+    new_username = data.get("username")
+    new_password = data.get("password")
+
+    if new_username:
+        if User.query.filter(User.username == new_username, User.id != user_id).first():
+            return jsonify({"error": "Username already taken"}), 400
+        user.username = new_username
+
+    if new_password:
+        hashed_pw = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        user.password = hashed_pw
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Profile updated successfully",
+        "username": user.username
+    }), 200
+
 
 # === TEST PROTECTED ROUTE ===
 @app.route("/api/me", methods=["GET"])

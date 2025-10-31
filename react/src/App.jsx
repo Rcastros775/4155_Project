@@ -11,6 +11,7 @@ import Bookmarks from "./pages/Bookmarks";
 import Login from "./pages/Login";
 import Register from "./pages/Register"; // ✅ added
 import EventDetail from "./pages/EventDetail";
+import Profile from "./pages/Profile";
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -47,9 +48,9 @@ function App() {
           {username ? (
             <>
               <span className="profile-icon"></span>
-              <span style={{ marginLeft: "10px", fontWeight: "600" }}>
+              <Link to="/profile" style={{ marginLeft: "10px", fontWeight: "600", cursor: "pointer", textDecoration: "none" }}>
                 Hi, {username}
-              </span>
+              </Link>
               <button className="login-btn" onClick={handleLogout}>
                 Log out
               </button>
@@ -72,6 +73,7 @@ function App() {
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} /> {/* ✅ new */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
     </>
