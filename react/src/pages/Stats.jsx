@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./statistics.css";
 
 export default function Statistics() {
   const [gender, setGender] = useState("women");
   const [openAccordion, setOpenAccordion] = useState(null);
   const [activeTabs, setActiveTabs] = useState({});
+  const [teamStats, setTeamStats] = useState({});
 
-  const sports = ["Baseball", "Basketball", "Football", "Soccer", "Tennis"];
+  const sports = ["Basketball", "Football", "Soccer", "Baseball", "Tennis"];
+
+  useEffect(() => {
+    sports.forEach((sport) => {
+      fetch(`http://localhost:5000/api/team-stats/${sport.toLowerCase()}/${gender}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setTeamStats((prevStats) => ({
+            ...prevStats,
+            [sport]: data, 
+          }));
+        })
+        .catch((err) => console.error("Error fetching team stats:", err));
+    });
+  }, [gender]);
 
   const toggleAccordion = (sport) => {
     setOpenAccordion(openAccordion === sport ? null : sport);
@@ -39,9 +54,7 @@ export default function Statistics() {
         {sports.map((sport) => (
           <div
             key={sport}
-            className={`accordion-item ${
-              openAccordion === sport ? "active" : ""
-            }`}
+            className={`accordion-item ${openAccordion === sport ? "active" : ""}`}
           >
             <button
               className="accordion-header"
@@ -52,67 +65,45 @@ export default function Statistics() {
             <div className="accordion-content">
               {/* Tabs */}
               <div className="tabs">
-                {["quick", "details", "season", "new"].map((tab) => (
+                {["quick", "details", "season"].map((tab) => (
                   <button
                     key={tab}
-                    className={`tab-btn ${
-                      (activeTabs[sport] || "quick") === tab ? "active" : ""
-                    }`}
+                    className={`tab-btn ${ (activeTabs[sport] || "quick") === tab ? "active" : "" }`}
                     onClick={() => changeTab(sport, tab)}
                   >
                     {tab === "quick"
                       ? "Quick Stats"
                       : tab === "details"
                       ? "Game Details"
-                      : tab === "season"
-                      ? "Season Stats"
-                      : "New!"}
+                      : "Season Stats"}
                   </button>
                 ))}
               </div>
 
               {/* Tab Content */}
               <div
-                className={`tab-content ${
-                  (activeTabs[sport] || "quick") === "quick" ? "active" : ""
-                }`}
+                className={`tab-content ${(activeTabs[sport] || "quick") === "quick" ? "active" : ""}`}
               >
-                <p>
-                  <strong>Wins:</strong> 5
-                </p>
-                <p>
-                  <strong>Losses:</strong> 2
-                </p>
-                <p>
-                  <strong>Draw:</strong> 1
-                </p>
+                {teamStats[sport] ? (
+                  <>
+                    <p><strong>Wins:</strong> {teamStats[sport]?.wins}</p>
+                    <p><strong>Losses:</strong> {teamStats[sport]?.losses}</p>
+                    <p><strong>Points Per Game:</strong> {teamStats[sport]?.points_per_game}</p>
+                  </>
+                ) : (
+                  <p>Loading stats...</p>
+                )}
               </div>
               <div
-                className={`tab-content ${
-                  (activeTabs[sport] || "quick") === "details" ? "active" : ""
-                }`}
+                className={`tab-content ${(activeTabs[sport] || "quick") === "details" ? "active" : ""}`}
               >
-                <p>
-                  <strong>Total Points Scored:</strong> 60
-                </p>
-                <p>
-                  <strong>Free Throws:</strong> 16
-                </p>
+                <p><strong>Total Points Scored:</strong> 60</p>
+                <p><strong>Free Throws:</strong> 16</p>
               </div>
               <div
-                className={`tab-content ${
-                  (activeTabs[sport] || "quick") === "season" ? "active" : ""
-                }`}
+                className={`tab-content ${(activeTabs[sport] || "quick") === "season" ? "active" : ""}`}
               >
                 <p>Season stats go here...</p>
-              </div>
-              <div
-                className={`tab-content ${
-                  (activeTabs[sport] || "quick") === "new" ? "active" : ""
-                }`}
-              >
-                <p><strong>Latest game details go here...</strong></p>
-                <p>Lorem ipsum...</p>
               </div>
             </div>
           </div>

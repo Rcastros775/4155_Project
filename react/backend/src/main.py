@@ -343,6 +343,41 @@ def remove_interest(event_id):
     db.session.commit()
     return jsonify({"message": "Interest removed"}), 200
 
+#------------- Team Statistics -------------------#
+team_stats = {
+    "basketball": {
+        "men": {"wins": 15, "losses": 3, "points_per_game": 78.5},
+        "women": {"wins": 14, "losses": 4, "points_per_game": 72.2}
+    },
+    "football": {
+        "men": {"wins": 10, "losses": 5, "points_per_game": 24.3},
+        "women": {"wins": 8, "losses": 7, "points_per_game": 18.0}
+    },
+    "soccer": {
+        "men": {"wins": 12, "losses": 4, "points_per_game": 2.1},
+        "women": {"wins": 11, "losses": 5, "points_per_game": 2.3}
+    },
+    "baseball": {
+        "men": {"wins": 20, "losses": 10, "points_per_game": .275},
+        "women": {"wins": 18, "losses": 12, "points_per_game": .260}
+    },
+    "tennis": {
+        "men": {"wins": 25, "losses": 5, "points_per_game": 8.4},
+        "women": {"wins": 22, "losses": 8, "points_per_game": 6.7}
+    }
+}
+
+@app.route("/api/team-stats/<string:sport>/<string:gender>", methods=["GET"])
+def get_team_stats(sport, gender):
+    stats = team_stats.get(sport, {}).get(gender)
+    if stats:
+        return jsonify(stats)
+    return jsonify({"error": "Team stats not found"}), 404
+
+
+
+
+
 #*******************************
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
