@@ -517,34 +517,189 @@ def remove_interest(event_id):
 #------------- Team Statistics -------------------#
 team_stats = {
     "basketball": {
-        "men": {"wins": 15, "losses": 3, "points_per_game": 78.5},
-        "women": {"wins": 14, "losses": 4, "points_per_game": 72.2}
+        "men": {
+            "wins": 15,
+            "losses": 3,
+            "points_per_game": 78.5,
+            "game details": {
+                "three_point_percentage": 38.7,
+                "free_throw_percentage": 75.4
+            },
+            "season stats": {
+                "rebounds_per_game": 35.2,
+                "assists_per_game": 15.4,
+                "steals_per_game": 7.8,
+                "blocks_per_game": 4.1
+            }
+        },
+        "women": {
+            "wins": 14,
+            "losses": 4,
+            "points_per_game": 72.2,
+            "game details": {
+                "three_point_percentage": 36.5,
+                "free_throw_percentage": 78.1
+            },
+            "season stats": {
+                "rebounds_per_game": 33.8,
+                "assists_per_game": 14.2,
+                "steals_per_game": 6.9,
+                "blocks_per_game": 3.5
+            }
+        }
     },
     "football": {
-        "men": {"wins": 10, "losses": 5, "points_per_game": 24.3},
-        "women": {"wins": 8, "losses": 7, "points_per_game": 18.0}
+        "men": {
+            "wins": 10,
+            "losses": 5,
+            "points_per_game": 24.3,
+            "game details": {
+                "passing_yards_per_game": 250.5,
+                "rushing_yards_per_game": 120.7,
+                "turnovers_per_game": 1.8
+            },
+            "season stats": {
+                "third_down_conversion_rate": 42.5,
+                "red_zone_efficiency": 85.3,
+                "touchdowns": 35,
+                "field_goals_made": 18
+            }
+        },
+        "women": {
+            "wins": 8,
+            "losses": 7,
+            "points_per_game": 18.0,
+            "game details": {
+                "passing_yards_per_game": 220.3,
+                "rushing_yards_per_game": 100.4,
+                "turnovers_per_game": 2.1
+            },
+            "season stats": {
+                "third_down_conversion_rate": 38.7,
+                "red_zone_efficiency": 78.9,
+                "touchdowns": 28,
+                "field_goals_made": 15
+            }
+        }
     },
     "soccer": {
-        "men": {"wins": 12, "losses": 4, "points_per_game": 2.1},
-        "women": {"wins": 11, "losses": 5, "points_per_game": 2.3}
+        "men": {
+            "wins": 12,
+            "losses": 4,
+            "points_per_game": 2.1,
+            "game details": {
+                "shots_on_goal_percentage": 45.2,
+                "possession_percentage": 53.4,
+                "pass_accuracy_percentage": 81.7
+            },
+            "season stats": {
+                "clean_sheets": 8,
+                "goals_scored": 30,
+                "assists": 18,
+                "fouls_committed": 50
+            }
+        },
+        "women": {
+            "wins": 11,
+            "losses": 5,
+            "points_per_game": 2.3,
+            "game details": {
+                "shots_on_goal_percentage": 42.8,
+                "possession_percentage": 50.9,
+                "pass_accuracy_percentage": 79.5
+            },
+            "season stats": {
+                "clean_sheets": 7,
+                "goals_scored": 28,
+                "assists": 20,
+                "fouls_committed": 55
+            }
+        }
     },
     "baseball": {
-        "men": {"wins": 20, "losses": 10, "points_per_game": .275},
-        "women": {"wins": 18, "losses": 12, "points_per_game": .260}
+        "men": {
+            "wins": 20,
+            "losses": 10,
+            "points_per_game": .275,
+            "game details": {
+                "batting_average": .275,
+                "on_base_percentage": .340,
+                "slugging_percentage": .450
+            },
+            "season stats": {
+                "home_runs": 45,
+                "batting_average": .275,
+                "earned_run_average": 3.50,
+                "fielding_percentage": .980
+            }
+        },
+        "women": {
+            "wins": 18,
+            "losses": 12,
+            "points_per_game": .260,
+            "game details": {
+                "batting_average": .260,
+                "on_base_percentage": .330,
+                "slugging_percentage": .420
+            },
+            "season stats": {
+                "home_runs": 30,
+                "batting_average": .260,
+                "earned_run_average": 4.20,
+                "fielding_percentage": .975
+            }
+        }
     },
     "tennis": {
-        "men": {"wins": 25, "losses": 5, "points_per_game": 8.4},
-        "women": {"wins": 22, "losses": 8, "points_per_game": 6.7}
+        "men": {
+            "wins": 25,
+            "losses": 5,
+            "points_per_game": 8.4,
+            "game details": {
+                "first_serve_percentage": 65.0,
+                "aces_per_match": 5.2,
+                "double_faults_per_match": 1.3
+            },
+            "season stats": {
+                "matches_won": 25,
+                "matches_lost": 5,
+                "break_points_converted_percentage": 40.5,
+                "total_aces": 78
+            }
+        },
+        "women": {
+            "wins": 22,
+            "losses": 8,
+            "points_per_game": 6.7,
+            "game details": {
+                "first_serve_percentage": 62.5,
+                "aces_per_match": 4.0,
+                "double_faults_per_match": 1.5
+            },
+            "season stats": {
+                "matches_won": 22,
+                "matches_lost": 8,
+                "break_points_converted_percentage": 38.2,
+                "total_aces": 65
+            }
+        }
     }
 }
 
+
 @app.route("/api/team-stats/<string:sport>/<string:gender>", methods=["GET"])
 def get_team_stats(sport, gender):
-    stats = team_stats.get(sport, {}).get(gender)
-    if stats:
-        return jsonify(stats)
-    return jsonify({"error": "Team stats not found"}), 404
+    # Fetching data for sport and gender
+    sport_data = team_stats.get(sport.lower(), {}).get(gender.lower())
 
+    # Debugging: print the data being returned
+    print(f"Fetching data for {sport} {gender}: {sport_data}")
+
+    if sport_data:
+        return jsonify(sport_data)
+    
+    return jsonify({"error": "Team stats not found"}), 404
+    
 
 
 
