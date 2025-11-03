@@ -9,7 +9,7 @@ import Events from "./pages/Events";
 import Friends from "./pages/Friends";
 import Bookmarks from "./pages/Bookmarks";
 import Login from "./pages/Login";
-import Register from "./pages/Register"; // ✅ added
+import Register from "./pages/Register"; 
 import EventDetail from "./pages/EventDetail";
 import Profile from "./pages/Profile";
 
@@ -71,7 +71,7 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> {/* ✅ new */}
+          <Route path="/register" element={<Register />} /> 
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
