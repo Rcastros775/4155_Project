@@ -1,0 +1,63 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# SQLite databases
+*.db
+
+# Instance folder (Flask runtime data)
+instance/
+!instance/.gitkeep
+
+# Environment / secrets
+*.env
+.env*
+
+# Flask / Gunicorn logs
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# Mac / OS files
+.DS_Store
+
+# Editor settings
+.vscode/
+.idea/
+
+# Compiled / packaged files
+build/
+dist/
+*.egg-info/
+
+# Byte-compiled / cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+env/
+
+# SQLite database files
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+
+# Ignore entire instance folder EXCEPT a placeholder file
+instance/*
+!instance/.gitkeep
+
+# OS files
+.DS_Store
+
+# Logs
+*.log

@@ -1,0 +1,29 @@
+.gender-toggle {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(15, 138, 67, 0.08);
+  border: 1px solid rgba(15, 138, 67, 0.2);
+}
+
+.gender-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--green-700);
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.gender-btn.active {
+  background: var(--green-700);
+  color: white;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.gender-btn:not(.active):hover {
+  background: rgba(255, 255, 255, 0.8);
+}

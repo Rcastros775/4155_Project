@@ -1,0 +1,29 @@
+.stats-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+.stats-hero {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.stats-title {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--green-900);
+  margin-bottom: 8px;
+}
+
+.stats-subtitle {
+  color: var(--gray-600);
+  max-width: 640px;
+  margin: 0 auto 20px;
+}
+
+.stats-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
