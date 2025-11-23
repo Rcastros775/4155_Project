@@ -59,8 +59,9 @@ export default function Events() {
       <h1 className="events-title">Events</h1>
 
       <div className="filter-bar">
-        <label>Filter by Location:</label>
+        <label htmlFor="location-select" >Filter by Location:</label>
         <select
+          id="location-select"
           value={selectedLocation}
           onChange={(e) => setSelectedLocation(e.target.value)}
           className="filter-dropdown"
@@ -71,8 +72,9 @@ export default function Events() {
             </option>
           ))}
         </select>
-        <label>Sort by:</label>
+        <label htmlFor="sort-select">Sort by:</label>
         <select
+          id="sort-select"
           value={selectedSort}
           onChange={(e) => setSelectedSort(e.target.value)}
           className="filter-dropdown"

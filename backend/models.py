@@ -1,5 +1,5 @@
 from datetime import datetime
-from database import db
+from backend.database import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

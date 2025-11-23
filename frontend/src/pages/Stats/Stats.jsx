@@ -10,6 +10,8 @@ export default function Stats() {
   const [activeTabs, setActiveTabs] = useState({});
   const [teamStats, setTeamStats] = useState({});
 
+  const Men = ["football", "baseball"];
+
   useEffect(() => {
     let cancelled = false;
 
@@ -50,7 +52,7 @@ export default function Stats() {
       </section>
 
       <section className="stats-accordion">
-        {SPORTS.map((sport) => (
+        {SPORTS.filter((sport) => !(gender === "women" && Men.includes(sport.toLowerCase()))).map((sport) => (
           <StatsAccordionItem
             key={sport}
             sport={sport}

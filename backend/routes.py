@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from datetime import datetime
-from database import db, bcrypt
-from models import User, Event, Bookmark, Interest, Message
+from backend.database import db, bcrypt
+from backend.models import User, Event, Bookmark, Interest, Message
+from backend.team_stats_data import team_stats
 from sqlalchemy import or_, and_
 
 routes = Blueprint("routes", __name__)
@@ -171,7 +172,7 @@ def remove_interest(event_id):
     return jsonify({"message": "Removed"})
 
 
-from team_stats_data import team_stats
+
 
 @routes.get("/api/team-stats/<sport>/<gender>")
 def team_stats_route(sport, gender):

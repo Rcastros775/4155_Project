@@ -3,7 +3,7 @@ team_stats = {
         "men": {
             "wins": 17,
             "losses": 6,
-            "points_per_game": 76.8,
+            "points_per_game": 71.2,
             "game_details": {
                 "three_point_percentage": 37.9,
                 "free_throw_percentage": 74.2
@@ -34,19 +34,19 @@ team_stats = {
 
     "football": {
         "men": {
-            "wins": 9,
-            "losses": 4,
-            "points_per_game": 27.1,
+            "wins": 1,
+            "losses": 10,
+            "points_per_game": 15.6,
             "game_details": {
-                "passing_yards_per_game": 262.4,
-                "rushing_yards_per_game": 135.9,
+                "passing_yards_per_game": 209.5,
+                "rushing_yards_per_game": 89.5,
                 "turnovers_per_game": 1.5
             },
             "season_stats": {
-                "third_down_conversion_rate": 44.8,
-                "red_zone_efficiency": 82.1,
+                "third_down_conversion_rate": 36.1,
+                "red_zone_efficiency": 64.2,
                 "touchdowns": 39,
-                "field_goals_made": 21
+                "field_goals_made": 9
             }
         },
         "women": {
