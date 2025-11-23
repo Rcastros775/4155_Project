@@ -14,6 +14,7 @@ import Stats from "./pages/Stats/Stats";
 import Chat from "./pages/Messages/Chat";
 import MessagesList from "./pages/Messages/MessagesList";
 import Profile from "./pages/Profile/Profile";
+import Friends from "./pages/Friends/Friends";
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -83,6 +84,8 @@ function App() {
           <Route path="/messages" element={<MessagesList />} />
           <Route path="/messages/:userId" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/friends" element={<Friends />} />
+
         </Routes>
       </main>
     </>

@@ -1,0 +1,24 @@
+.friends-page {
+  padding: 16px;
+  color: black;
+}
+.friends-section {
+  margin-bottom: 24px;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 6px;
+}
+.friends-list, .pending-list, .search-results {
+  list-style: none;
+  padding: 0;
+}
+.friend-row, .pending-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 0;
+  border-bottom:1px solid #fafafa;
+}
+.friend-actions button, .pending-actions button {
+  margin-left:8px;
+}

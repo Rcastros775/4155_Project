@@ -1,5 +1,6 @@
 from datetime import datetime
 from backend.database import db
+from sqlalchemy import UniqueConstraint
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,3 +66,29 @@ class Message(db.Model):
         foreign_keys=[receiver_id],
         backref=db.backref("received_messages", lazy=True),
     )
+
+class Friendship(db.Model):
+    __tablename__ = "friendships"
+    id = db.Column(db.Integer, primary_key=True)
+    requester_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
+    receiver_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
+    status = db.Column(db.String(20), nullable=False, default="pending", index=True)  # pending, accepted, declined
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    requester = db.relationship("User", foreign_keys=[requester_id], backref=db.backref("outgoing_friend_requests", lazy="dynamic"))
+    receiver = db.relationship("User", foreign_keys=[receiver_id], backref=db.backref("incoming_friend_requests", lazy="dynamic"))
+
+    __table_args__ = (
+        UniqueConstraint("requester_id", "receiver_id", name="uix_requester_receiver"),
+    )
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "requester_id": self.requester_id,
+            "receiver_id": self.receiver_id,
+            "status": self.status,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from datetime import datetime
 from backend.database import db, bcrypt
-from backend.models import User, Event, Bookmark, Interest, Message
+from backend.models import User, Event, Bookmark, Interest, Message, Friendship
 from backend.team_stats_data import team_stats
 from sqlalchemy import or_, and_
 
@@ -285,3 +285,150 @@ def update_user():
         print("PROFILE UPDATE ERROR:", e)
         return jsonify({"error": "Server error updating profile"}), 500
 
+@routes.post("/api/friends/request")
+@jwt_required()
+def send_friend_request():
+    try:
+        data = request.get_json() or {}
+        receiver_id = int(data.get("receiver_id", 0))
+        if not receiver_id:
+            return jsonify({"error": "receiver_id required"}), 400
+
+        requester_id = int(get_jwt_identity())
+        if requester_id == receiver_id:
+            return jsonify({"error": "Cannot friend yourself"}), 400
+
+        receiver = User.query.get(receiver_id)
+        if not receiver:
+            return jsonify({"error": "Receiver not found"}), 404
+
+        existing = Friendship.query.filter(
+            (Friendship.requester_id == requester_id) & (Friendship.receiver_id == receiver_id)
+        ).first()
+        if existing:
+            if existing.status == "pending":
+                return jsonify({"message": "Request already pending"}), 200
+            if existing.status == "accepted":
+                return jsonify({"message": "Already friends"}), 200
+            existing.status = "pending"
+            db.session.commit()
+            return jsonify({"message": "Request re-sent"}), 200
+
+        reverse = Friendship.query.filter(
+            (Friendship.requester_id == receiver_id) & (Friendship.receiver_id == requester_id)
+        ).first()
+        if reverse:
+            if reverse.status == "pending":
+                reverse.status = "accepted"
+                db.session.commit()
+                return jsonify({"message": "Mutual friend request accepted automatically", "friendship": reverse.as_dict()}), 200
+            elif reverse.status == "accepted":
+                return jsonify({"message": "Already friends"}), 200
+
+        fr = Friendship(requester_id=requester_id, receiver_id=receiver_id, status="pending")
+        db.session.add(fr)
+        db.session.commit()
+        return jsonify({"message": "Friend request sent", "friendship": fr.as_dict()}), 201
+    except Exception as e:
+        print("SEND FRIEND ERROR:", e)
+        return jsonify({"error": "Server error sending request"}), 500
+
+
+@routes.get("/api/friends/pending")
+@jwt_required()
+def list_pending_requests():
+    try:
+        user_id = int(get_jwt_identity())
+        rows = Friendship.query.filter_by(receiver_id=user_id, status="pending").all()
+        result = []
+        for r in rows:
+            requester = User.query.get(r.requester_id)
+            result.append({
+                "friendship_id": r.id,
+                "requester_id": r.requester_id,
+                "requester_username": requester.username if requester else None,
+                "created_at": r.created_at.isoformat() if r.created_at else None
+            })
+        return jsonify(result), 200
+    except Exception as e:
+        print("LIST PENDING ERROR:", e)
+        return jsonify({"error": "Server error listing pending"}), 500
+
+
+@routes.post("/api/friends/respond")
+@jwt_required()
+def respond_to_request():
+    try:
+        user_id = int(get_jwt_identity())
+        data = request.get_json() or {}
+        friendship_id = int(data.get("friendship_id", 0))
+        action = data.get("action", "").lower()
+
+        if not friendship_id or action not in ("accept", "decline"):
+            return jsonify({"error": "friendship_id and action (accept|decline) required"}), 400
+
+        fr = Friendship.query.get(friendship_id)
+        if not fr:
+            return jsonify({"error": "Friendship request not found"}), 404
+
+        if fr.receiver_id != user_id:
+            return jsonify({"error": "Not authorized to respond to this request"}), 403
+
+        if action == "accept":
+            fr.status = "accepted"
+            db.session.commit()
+            return jsonify({"message": "Friend request accepted", "friendship": fr.as_dict()}), 200
+        else:
+            fr.status = "declined"
+            db.session.commit()
+            return jsonify({"message": "Friend request declined"}), 200
+
+    except Exception as e:
+        print("RESPOND FRIEND ERROR:", e)
+        return jsonify({"error": "Server error responding to request"}), 500
+
+
+@routes.get("/api/friends")
+@jwt_required()
+def list_friends():
+    try:
+        user_id = int(get_jwt_identity())
+        rows = Friendship.query.filter(
+            Friendship.status == "accepted",
+            ((Friendship.requester_id == user_id) | (Friendship.receiver_id == user_id))
+        ).all()
+
+        friends = []
+        for r in rows:
+            other_id = r.receiver_id if r.requester_id == user_id else r.requester_id
+            other = User.query.get(other_id)
+            friends.append({
+                "friendship_id": r.id,
+                "user_id": other_id,
+                "username": other.username if other else None
+            })
+        return jsonify(friends), 200
+    except Exception as e:
+        print("LIST FRIENDS ERROR:", e)
+        return jsonify({"error": "Server error listing friends"}), 500
+
+
+@routes.delete("/api/friends/<int:other_user_id>")
+@jwt_required()
+def remove_friend(other_user_id):
+    try:
+        user_id = int(get_jwt_identity())
+        fr = Friendship.query.filter(
+            Friendship.status == "accepted",
+            ((Friendship.requester_id == user_id) & (Friendship.receiver_id == other_user_id)) |
+            ((Friendship.requester_id == other_user_id) & (Friendship.receiver_id == user_id))
+        ).first()
+        if not fr:
+            return jsonify({"error": "Friend relationship not found"}), 404
+
+        db.session.delete(fr)
+        db.session.commit()
+        return jsonify({"message": "Friend removed"}), 200
+    except Exception as e:
+        print("REMOVE FRIEND ERROR:", e)
+        return jsonify({"error": "Server error removing friend"}), 500
