@@ -12,9 +12,6 @@ env/
 # SQLite databases
 *.db
 
-# Instance folder (Flask runtime data)
-instance/
-!instance/.gitkeep
 
 # Environment / secrets
 *.env
