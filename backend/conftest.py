@@ -1,10 +1,17 @@
 import pytest
-from backend.main import create_app
+try:
+    from backend.main import create_app
+except ImportError:
+    from main import create_app
 
-@pytest.fixture
-def client():
+
+@pytest.fixture()
+def app():
     app = create_app()
-    app.config["TESTING"] = True
+    app.config.update({"TESTING": True})
+    return app
 
-    with app.test_client() as client:
-        yield client
+
+@pytest.fixture()
+def client(app):
+    return app.test_client()

@@ -1,12 +1,20 @@
 from flask import Flask
 from flask_cors import CORS
 from datetime import datetime
-from backend.config import Config
-from backend.database import db, bcrypt, jwt
-from backend.models import Event
-from backend.routes import routes
+try:
+    from backend.config import Config
+    from backend.database import db, bcrypt, jwt
+    from backend.models import Event
+    from backend.routes import routes
+    from backend.games_seed_data import games 
+except ImportError:
+    from config import Config
+    from database import db, bcrypt, jwt
+    from models import Event
+    from routes import routes
+    from games_seed_data import games 
 
-from backend.games_seed_data import games 
+
 
 def create_app():
     app = Flask(__name__)

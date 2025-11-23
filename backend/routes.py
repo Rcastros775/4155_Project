@@ -1,10 +1,16 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from datetime import datetime
-from backend.database import db, bcrypt
-from backend.models import User, Event, Bookmark, Interest, Message, Friendship
-from backend.team_stats_data import team_stats
 from sqlalchemy import or_, and_
+
+try:
+    from backend.database import db, bcrypt
+    from backend.models import User, Event, Bookmark, Interest, Message, Friendship
+    from backend.team_stats_data import team_stats
+except ImportError:
+    from database import db, bcrypt
+    from models import User, Event, Bookmark, Interest, Message, Friendship
+    from team_stats_data import team_stats
 
 routes = Blueprint("routes", __name__)
 
