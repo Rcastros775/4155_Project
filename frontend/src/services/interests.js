@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api";
+const API = import.meta.env.VITE_API_URL;
 
 export async function getInterestStatus(eventId) {
   const token = localStorage.getItem("token");
