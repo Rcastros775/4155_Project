@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   listFriends,
   listPendingRequests,
@@ -9,6 +10,7 @@ import {
 import "./Friends.css";
 
 const API = import.meta.env.VITE_API_URL;
+const navigate = useNavigate();
 
 export default function Friends() {
   const [friends, setFriends] = useState([]);
