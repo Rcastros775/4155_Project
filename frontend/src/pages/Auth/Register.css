@@ -63,7 +63,7 @@
 }
 
 .auth-btn:hover {
-  background: var(--green-800);
+  background: #3da553;
   transform: translateY(-2px);
 }
 

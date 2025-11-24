@@ -50,7 +50,7 @@
 .auth-btn {
   padding: 14px 20px;
   background: var(--green-700);
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: 700;
   border-radius: 12px;
   border: none;
@@ -61,7 +61,7 @@
 }
 
 .auth-btn:hover {
-  background: var(--green-800);
+  background: var(--green-600);
   transform: translateY(-2px);
 }
 
