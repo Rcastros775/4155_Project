@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react"; 
-import { listFriends, listPendingRequests, respondToRequest, sendFriendRequest, removeFriend } from "../../services/friends";
+import {
+  listFriends,
+  listPendingRequests,
+  respondToRequest,
+  sendFriendRequest,
+  removeFriend
+} from "../../services/friends";
 import "./Friends.css";
+
+const API = import.meta.env.VITE_API_URL;
 
 export default function Friends() {
   const [friends, setFriends] = useState([]);
@@ -16,7 +24,7 @@ export default function Friends() {
   async function refreshAll() {
     setLoading(true);
     try {
-      const [friendsRes, pendingRes] = await Promise.all([listFriends(), listPendingRequests()]);
+      const [friendsRes, pendingRes] = await Promise.all([listFriends(), listPendingRequests(),]);
       setFriends(Array.isArray(friendsRes) ? friendsRes : []);
       setPending(Array.isArray(pendingRes) ? pendingRes : []);
     } catch (e) {
@@ -28,29 +36,30 @@ export default function Friends() {
 
   async function onAccept(friendship_id) {
     await respondToRequest(friendship_id, "accept");
-    await refreshAll();
+    refreshAll();
   }
 
   async function onDecline(friendship_id) {
     await respondToRequest(friendship_id, "decline");
-    await refreshAll();
+    refreshAll();
   }
 
   async function onRemove(user_id) {
     if (!window.confirm("Remove friend?")) return;
     await removeFriend(user_id);
-    await refreshAll();
+    refreshAll();
   }
 
   async function onSearch(e) {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/users?query=" + encodeURIComponent(searchQuery), {
+      const res = await fetch(`${API}/users?query=${encodeURIComponent(searchQuery)}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}` || undefined
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}` || undefined,
+        },
       });
+
       const data = await res.json();
       setSearchResults(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -61,7 +70,7 @@ export default function Friends() {
 
   async function onSendRequest(user_id) {
     await sendFriendRequest(user_id);
-    await refreshAll();
+    refreshAll();
   }
 
   if (loading) return <div className="friends-page">Loading...</div>;
@@ -70,15 +79,19 @@ export default function Friends() {
     <div className="friends-page">
       <header className="friends-header">
         <h2>Friends Portal</h2>
-        <p>Connect with other Niners, see who's going to games, and build your own athletic community.</p>
+        <p>
+          Connect with other Niners, see who's going to games, and build your own athletic community.
+        </p>
         <button className="find-friends-btn">Find New Friends</button>
       </header>
 
       <section className="friends-section">
         <h3>Pending Requests</h3>
-        {pending.length === 0 ? <p>No pending requests</p> : (
+        {pending.length === 0 ? (
+          <p>No pending requests</p>
+        ) : (
           <ul className="pending-list">
-            {pending.map(p => (
+            {pending.map((p) => (
               <li key={p.friendship_id} className="request-item">
                 <span>{p.requester_username || "Unknown"}</span>
                 <div className="pending-actions">
@@ -93,12 +106,13 @@ export default function Friends() {
 
       <section className="friends-section">
         <h3>My Friends</h3>
-        {friends.length === 0 ? <p>No friends yet</p> : (
+        {friends.length === 0 ? (
+          <p>No friends yet</p>
+        ) : (
           <ul className="friends-list">
-            {friends.map(f => (
+            {friends.map((f) => (
               <li key={f.friendship_id} className="friend-item">
                 <span className="friend-name">{f.username}</span>
-                <span className="friend-sport">{f.sport} - {f.year}</span>
                 <div className="friend-actions">
                   <button className="message-btn" onClick={() => window.location = `/messages/${f.user_id}`}>Message</button>
                   <button className="remove-btn" onClick={() => onRemove(f.user_id)}>Remove</button>
@@ -112,15 +126,21 @@ export default function Friends() {
       <section className="friends-section">
         <h3>Add / Search Users</h3>
         <form onSubmit={onSearch}>
-          <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search username or email" />
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search username or email"
+          />
           <button type="submit">Search</button>
         </form>
 
         <ul className="search-results">
-          {searchResults.map(u => (
+          {searchResults.map((u) => (
             <li key={u.id}>
               <span>{u.username}</span>
-              <button className="send-request-btn" onClick={() => onSendRequest(u.id)}>Send Request</button>
+              <button className="send-request-btn" onClick={() => onSendRequest(u.id)}>
+                Send Request
+              </button>
             </li>
           ))}
         </ul>

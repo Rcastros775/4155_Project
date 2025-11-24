@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchConversation, sendMessage } from "../../services/messages";
 import "./Chat.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function Chat() {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ export default function Chat() {
   useEffect(() => {
     if (!userId) return;
 
-    fetch(`http://localhost:5000/api/users/${userId}`)
+    fetch(`${API}/users/${userId}`)
       .then((res) => res.json())
       .then((data) => setOtherUser(data))
       .catch(() => {});
@@ -29,7 +31,7 @@ export default function Chat() {
       return;
     }
 
-    fetch("http://localhost:5000/api/me", {
+    fetch(`${API}/me`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

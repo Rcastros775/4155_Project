@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./MessagesList.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function MessagesList() {
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState(null);
@@ -10,14 +12,15 @@ export default function MessagesList() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch("http://localhost:5000/api/me", {
+      fetch(`${API}/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
-        .then((data) => setMe(data));
+        .then((data) => setMe(data))
+        .catch(() => {});
     }
 
-    fetch("http://localhost:5000/api/users")
+    fetch(`${API}/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch(() => {});
