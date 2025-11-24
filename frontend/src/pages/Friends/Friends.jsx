@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import {
   listFriends,
   listPendingRequests,
   respondToRequest,
   sendFriendRequest,
-  removeFriend
+  removeFriend,
 } from "../../services/friends";
 import "./Friends.css";
 
@@ -24,7 +24,10 @@ export default function Friends() {
   async function refreshAll() {
     setLoading(true);
     try {
-      const [friendsRes, pendingRes] = await Promise.all([listFriends(), listPendingRequests(),]);
+      const [friendsRes, pendingRes] = await Promise.all([
+        listFriends(),
+        listPendingRequests(),
+      ]);
       setFriends(Array.isArray(friendsRes) ? friendsRes : []);
       setPending(Array.isArray(pendingRes) ? pendingRes : []);
     } catch (e) {
@@ -53,12 +56,16 @@ export default function Friends() {
   async function onSearch(e) {
     e.preventDefault();
     try {
-      const res = await fetch(`${API}/users?query=${encodeURIComponent(searchQuery)}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}` || undefined,
-        },
-      });
+      const res = await fetch(
+        `${API}/users?query=${encodeURIComponent(searchQuery)}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              `Bearer ${localStorage.getItem("token")}` || undefined,
+          },
+        }
+      );
 
       const data = await res.json();
       setSearchResults(Array.isArray(data) ? data : []);
@@ -80,7 +87,8 @@ export default function Friends() {
       <header className="friends-header">
         <h2>Friends Portal</h2>
         <p>
-          Connect with other Niners, see who's going to games, and build your own athletic community.
+          Connect with other Niners, see who's going to games, and build your
+          own athletic community.
         </p>
         <button className="find-friends-btn">Find New Friends</button>
       </header>
@@ -95,8 +103,18 @@ export default function Friends() {
               <li key={p.friendship_id} className="request-item">
                 <span>{p.requester_username || "Unknown"}</span>
                 <div className="pending-actions">
-                  <button className="accept-btn" onClick={() => onAccept(p.friendship_id)}>Accept</button>
-                  <button className="decline-btn" onClick={() => onDecline(p.friendship_id)}>Decline</button>
+                  <button
+                    className="accept-btn"
+                    onClick={() => onAccept(p.friendship_id)}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="decline-btn"
+                    onClick={() => onDecline(p.friendship_id)}
+                  >
+                    Decline
+                  </button>
                 </div>
               </li>
             ))}
@@ -114,8 +132,18 @@ export default function Friends() {
               <li key={f.friendship_id} className="friend-item">
                 <span className="friend-name">{f.username}</span>
                 <div className="friend-actions">
-                  <button className="message-btn" onClick={() => window.location = `/messages/${f.user_id}`}>Message</button>
-                  <button className="remove-btn" onClick={() => onRemove(f.user_id)}>Remove</button>
+                  <button
+                    className="message-btn"
+                    onClick={() => navigate(`/messages/${f.user_id}`)}
+                  >
+                    Message
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => onRemove(f.user_id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </li>
             ))}
@@ -138,7 +166,10 @@ export default function Friends() {
           {searchResults.map((u) => (
             <li key={u.id}>
               <span>{u.username}</span>
-              <button className="send-request-btn" onClick={() => onSendRequest(u.id)}>
+              <button
+                className="send-request-btn"
+                onClick={() => onSendRequest(u.id)}
+              >
                 Send Request
               </button>
             </li>
