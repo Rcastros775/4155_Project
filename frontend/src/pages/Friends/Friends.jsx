@@ -10,7 +10,6 @@ import {
 import "./Friends.css";
 
 const API = import.meta.env.VITE_API_URL;
-const navigate = useNavigate();
 
 export default function Friends() {
   const [friends, setFriends] = useState([]);
@@ -18,6 +17,7 @@ export default function Friends() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     refreshAll();
