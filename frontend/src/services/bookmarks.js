@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL;
+import { API } from "./config";
 
 export async function getBookmarks() {
   const token = localStorage.getItem("token");

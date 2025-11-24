@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL;
+import { API } from "./config";
 
 export async function getMyProfile() {
   const token = localStorage.getItem("token");
@@ -11,7 +11,7 @@ export async function getMyProfile() {
 export async function updateProfile(form) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/user/update", {
+  const res = await fetch(`${API}/user/update`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
