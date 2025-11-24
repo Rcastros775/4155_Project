@@ -134,6 +134,39 @@ def get_bookmarks():
         } for b in results
     ])
 
+@routes.get("/api/bookmarks/<int:event_id>/friends")
+@jwt_required()
+def friends_who_bookmarked(event_id):
+    user_id = int(get_jwt_identity())
+
+    friendships = Friendship.query.filter(
+        Friendship.status == "accepted",
+        ((Friendship.requester_id == user_id) | (Friendship.receiver_id == user_id))
+    ).all()
+
+    friend_ids = [
+        fr.receiver_id if fr.requester_id == user_id else fr.requester_id
+        for fr in friendships
+    ]
+
+    if not friend_ids:
+        return jsonify([])
+
+    rows = Bookmark.query.filter(
+        Bookmark.event_id == event_id,
+        Bookmark.user_id.in_(friend_ids)
+    ).all()
+
+    result = []
+    for r in rows:
+        user = User.query.get(r.user_id)
+        result.append({
+            "user_id": user.id,
+            "username": user.username
+        })
+
+    return jsonify(result), 200
+
 
 @routes.get("/api/interests/<int:event_id>")
 def list_interests(event_id):
@@ -438,3 +471,4 @@ def remove_friend(other_user_id):
     except Exception as e:
         print("REMOVE FRIEND ERROR:", e)
         return jsonify({"error": "Server error removing friend"}), 500
+
