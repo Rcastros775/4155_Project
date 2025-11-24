@@ -53,9 +53,6 @@ function App() {
         <div className="profile">
           {username ? (
             <>
-              <Link to="/messages" className="messages-btn">
-                💬
-              </Link>
               <Link to="/profile" className="profile-icon profile-link">
                 Hi, {username}
               </Link>
@@ -85,7 +82,6 @@ function App() {
           <Route path="/messages/:userId" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/friends" element={<Friends />} />
-
         </Routes>
       </main>
     </>

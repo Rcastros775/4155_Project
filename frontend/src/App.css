@@ -107,18 +107,3 @@ header {
   background: var(--white);
   color: var(--green-900);
 }
-
-.messages-btn {
-  margin-right: 12px;
-  background: var(--green-700);
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-  transition: 0.2s ease;
-}
-
-.messages-btn:hover {
-  background: var(--green-800);
-}
