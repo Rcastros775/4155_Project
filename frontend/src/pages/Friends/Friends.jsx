@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import { listFriends, listPendingRequests, respondToRequest, sendFriendRequest, removeFriend } from "../../services/friends";
 import "./Friends.css";
 
 export default function Friends() {
-    console.log("Friends page mounted");
-
   const [friends, setFriends] = useState([]);
   const [pending, setPending] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,18 +68,22 @@ export default function Friends() {
 
   return (
     <div className="friends-page">
-      <h2>Friends</h2>
+      <header className="friends-header">
+        <h2>Friends Portal</h2>
+        <p>Connect with other Niners, see who's going to games, and build your own athletic community.</p>
+        <button className="find-friends-btn">Find New Friends</button>
+      </header>
 
       <section className="friends-section">
-        <h3>My Friends</h3>
-        {friends.length === 0 ? <p>No friends yet</p> : (
-          <ul className="friends-list">
-            {friends.map(f => (
-              <li key={f.friendship_id} className="friend-row">
-                <span className="friend-name">{f.username}</span>
-                <div className="friend-actions">
-                  <button onClick={() => window.location = `/messages/${f.user_id}`}>Message</button>
-                  <button onClick={() => onRemove(f.user_id)}>Remove</button>
+        <h3>Pending Requests</h3>
+        {pending.length === 0 ? <p>No pending requests</p> : (
+          <ul className="pending-list">
+            {pending.map(p => (
+              <li key={p.friendship_id} className="request-item">
+                <span>{p.requester_username || "Unknown"}</span>
+                <div className="pending-actions">
+                  <button className="accept-btn" onClick={() => onAccept(p.friendship_id)}>Accept</button>
+                  <button className="decline-btn" onClick={() => onDecline(p.friendship_id)}>Decline</button>
                 </div>
               </li>
             ))}
@@ -90,15 +92,16 @@ export default function Friends() {
       </section>
 
       <section className="friends-section">
-        <h3>Pending Requests</h3>
-        {pending.length === 0 ? <p>No pending requests</p> : (
-          <ul className="pending-list">
-            {pending.map(p => (
-              <li key={p.friendship_id} className="pending-row">
-                <span>{p.requester_username || "Unknown"}</span>
-                <div className="pending-actions">
-                  <button onClick={() => onAccept(p.friendship_id)}>Accept</button>
-                  <button onClick={() => onDecline(p.friendship_id)}>Decline</button>
+        <h3>My Friends</h3>
+        {friends.length === 0 ? <p>No friends yet</p> : (
+          <ul className="friends-list">
+            {friends.map(f => (
+              <li key={f.friendship_id} className="friend-item">
+                <span className="friend-name">{f.username}</span>
+                <span className="friend-sport">{f.sport} - {f.year}</span>
+                <div className="friend-actions">
+                  <button className="message-btn" onClick={() => window.location = `/messages/${f.user_id}`}>Message</button>
+                  <button className="remove-btn" onClick={() => onRemove(f.user_id)}>Remove</button>
                 </div>
               </li>
             ))}
@@ -117,7 +120,7 @@ export default function Friends() {
           {searchResults.map(u => (
             <li key={u.id}>
               <span>{u.username}</span>
-              <button onClick={() => onSendRequest(u.id)}>Send Request</button>
+              <button className="send-request-btn" onClick={() => onSendRequest(u.id)}>Send Request</button>
             </li>
           ))}
         </ul>
